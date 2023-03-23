@@ -1,17 +1,34 @@
-import "./Tooltip.css";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import './Tooltip.css';
 
-function Tooltip() {
+const Tooltip = ({ position, text, children }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsVisible(false);
+  };
+
   return (
-    <div className="tooltip-container">
-      <div className="tooltip tooltip-left">Tooltip Left</div>
-      <div className="tooltip-central-col">
-        <div className="tooltip tooltip-down">Tooltip Down</div>
-        <button className="tooltip-btn">Hover over me!</button>
-        <div className="tooltip tooltip-up">Tooltip &nbsp;&nbsp;Up</div>
-      </div>
-      <div className="tooltip tooltip-right">Tooltip Right</div>
+    <div className="tooltip-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      {children}
+      {isVisible && (
+        <div className={`tooltip tooltip-${position}`}>
+          <div className="tooltip-content">{text}</div>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+Tooltip.propTypes = {
+  position: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
+  text: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default Tooltip;
