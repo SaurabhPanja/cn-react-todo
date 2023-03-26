@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import './Tooltip.css';
 
-const Tooltip = ({ position, text, children }) => {
+const Tooltip = ({ position }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleMouseEnter = () => {
@@ -15,20 +14,14 @@ const Tooltip = ({ position, text, children }) => {
 
   return (
     <div className="tooltip-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {children}
+      <button>Hover me</button>
       {isVisible && (
         <div className={`tooltip tooltip-${position}`}>
-          <div className="tooltip-content">{text}</div>
+          <div className="tooltip-content">This is a tooltip</div>
         </div>
       )}
     </div>
   );
-};
-
-Tooltip.propTypes = {
-  position: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
-  text: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default Tooltip;
